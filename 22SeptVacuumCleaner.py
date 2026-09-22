@@ -1,44 +1,78 @@
+#Implementation of vaccum cleaner using simple reflex agent in python
+# Program for Vacuum Cleaner with just 2 locations A and B
+# Include the random module
 import random
 
-class VacuumCleaner:
+# Define the environment class
+class Environment:
     def __init__(self):
-        self.rooms = {
-            "A": random.choice(["Dirty", "Clean"]),
-            "B": random.choice(["Dirty", "Clean"])
-        }
-        self.current_room = random.choice(["A", "B"])
+        # Initialize the condition of locations A and B
+        self.locationCondition = {'A': random.randint(0, 1), 'B': random.randint(0, 1)}
 
-    def display(self):
-        print("Current Room:", self.current_room)
-        print("Room A:", self.rooms["A"])
-        print("Room B:", self.rooms["B"])
+# Define the vacuum agent class that inherits from the Environment class
+class SimpleReflexVacuumAgent:
+    def __init__(self, environment):
+        # Print the initial conditions of locations A and B
+        print(environment.locationCondition)
 
-    def clean(self):
-        if self.rooms[self.current_room] == "Dirty":
-            print("Room", self.current_room, "is dirty")
-            print("Vacuum cleaner is sucking...")
-            self.rooms[self.current_room] = "Clean"
+        # Initialize the score
+        score = 0
+
+        # Randomly place the vacuum at location A (0) or B (1)
+        vacuumLocation = random.randint(0, 1)
+
+        if vacuumLocation == 0:
+            print("Vacuum is randomly placed at Location A.")
+            # Check if location A is dirty (1)
+            if environment.locationCondition['A'] == 1:
+                print("Location A is Dirty.")
+                # Clean location A
+                environment.locationCondition['A'] = 0
+                score += 1
+                print("Location A has been Cleaned.")
+            else:
+                print("Location A is Clean.")
+
+            print("Moving to Location B...")
+            # Check if location B is dirty (1)
+            if environment.locationCondition['B'] == 1:
+                print("Location B is Dirty.")
+                # Clean location B
+                environment.locationCondition['B'] = 0
+                score += 1
+                print("Location B has been Cleaned.")
+            else:
+                print("Location B is Clean.")
+
         else:
-            print("Room", self.current_room, "is already clean")
+            print("Vacuum is randomly placed at Location B.")
+            # Check if location B is dirty (1)
+            if environment.locationCondition['B'] == 1:
+                print("Location B is Dirty.")
+                # Clean location B
+                environment.locationCondition['B'] = 0
+                score += 1
+                print("Location B has been Cleaned.")
+            else:
+                print("Location B is Clean.")
 
-    def move(self):
-        if self.current_room == "A":
-            self.current_room = "B"
-        else:
-            self.current_room = "A"
+            print("Moving to Location A...")
+            # Check if location A is dirty (1)
+            if environment.locationCondition['A'] == 1:
+                print("Location A is Dirty.")
+                # Clean location A
+                environment.locationCondition['A'] = 0
+                score += 1
+                print("Location A has been Cleaned.")
+            else:
+                print("Location A is Clean.")
 
-        print("Moving to Room", self.current_room)
+        # Print the final conditions of locations A and B
+        print(environment.locationCondition)
+        # Print the performance score
+        print("Performance Measurement: " + str(score))
 
-    def run(self):
-        self.display()
-
-        self.clean()
-        self.move()
-        self.clean()
-
-        print("\nFinal State:")
-        self.display()
-
-
-v = VacuumCleaner()
-v.run()
+# Create an instance of the Environment class
+theEnvironment = Environment()
+# Create an instance of the SimpleReflexVacuumAgent class with the environment instance
+theVacuum = SimpleReflexVacuumAgent(theEnvironment)
