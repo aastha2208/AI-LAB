@@ -1,78 +1,26 @@
-#Implementation of vaccum cleaner using simple reflex agent in python
-# Program for Vacuum Cleaner with just 2 locations A and B
-# Include the random module
-import random
+def vacuum_cleaner_agent(location, status):
+    x, y = location
+    if status[x][y] == 'Dirty':
+        return f"The vacuum cleaner is at ({x}, {y}) and it is dirty. Cleaning."
+    else:
+        return f"The vacuum cleaner is at ({x}, {y}) and it is clean. Moving."
 
-# Define the environment class
-class Environment:
-    def __init__(self):
-        # Initialize the condition of locations A and B
-        self.locationCondition = {'A': random.randint(0, 1), 'B': random.randint(0, 1)}
+status = [['Dirty', 'Clean'], ['Dirty', 'Dirty']]
+location = (0, 0)
 
-# Define the vacuum agent class that inherits from the Environment class
-class SimpleReflexVacuumAgent:
-    def __init__(self, environment):
-        # Print the initial conditions of locations A and B
-        print(environment.locationCondition)
+while True:
+    action = vacuum_cleaner_agent(location, status)
+    print(action)
 
-        # Initialize the score
-        score = 0
+    x, y = location
+    if status[x][y] == 'Dirty':
+        status[x][y] = 'Clean'
 
-        # Randomly place the vacuum at location A (0) or B (1)
-        vacuumLocation = random.randint(0, 1)
+    if status[0][0] == 'Clean' and status[0][1] == 'Clean' and status[1][0] == 'Clean' and status[1][1] == 'Clean':
+        print("All locations are clean. The vacuum cleaner is finished.")
+        break
 
-        if vacuumLocation == 0:
-            print("Vacuum is randomly placed at Location A.")
-            # Check if location A is dirty (1)
-            if environment.locationCondition['A'] == 1:
-                print("Location A is Dirty.")
-                # Clean location A
-                environment.locationCondition['A'] = 0
-                score += 1
-                print("Location A has been Cleaned.")
-            else:
-                print("Location A is Clean.")
-
-            print("Moving to Location B...")
-            # Check if location B is dirty (1)
-            if environment.locationCondition['B'] == 1:
-                print("Location B is Dirty.")
-                # Clean location B
-                environment.locationCondition['B'] = 0
-                score += 1
-                print("Location B has been Cleaned.")
-            else:
-                print("Location B is Clean.")
-
-        else:
-            print("Vacuum is randomly placed at Location B.")
-            # Check if location B is dirty (1)
-            if environment.locationCondition['B'] == 1:
-                print("Location B is Dirty.")
-                # Clean location B
-                environment.locationCondition['B'] = 0
-                score += 1
-                print("Location B has been Cleaned.")
-            else:
-                print("Location B is Clean.")
-
-            print("Moving to Location A...")
-            # Check if location A is dirty (1)
-            if environment.locationCondition['A'] == 1:
-                print("Location A is Dirty.")
-                # Clean location A
-                environment.locationCondition['A'] = 0
-                score += 1
-                print("Location A has been Cleaned.")
-            else:
-                print("Location A is Clean.")
-
-        # Print the final conditions of locations A and B
-        print(environment.locationCondition)
-        # Print the performance score
-        print("Performance Measurement: " + str(score))
-
-# Create an instance of the Environment class
-theEnvironment = Environment()
-# Create an instance of the SimpleReflexVacuumAgent class with the environment instance
-theVacuum = SimpleReflexVacuumAgent(theEnvironment)
+    if y < 1:
+        location = (x, y + 1)
+    elif x < 1:
+        location = (x + 1, 0)
