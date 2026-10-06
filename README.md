@@ -1,1 +1,1 @@
-This repo has all my  AI lab codes..   
+This repo contans all AI Lab program codes    
