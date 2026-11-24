@@ -56,7 +56,7 @@ while True:
         display()
         print("It's a draw!")
         break
-
+    
     aibot()
     if check_win("O"):
         display()
